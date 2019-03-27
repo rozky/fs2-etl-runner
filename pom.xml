@@ -1,0 +1,190 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.rozky.tools.etl</groupId>
+    <artifactId>etl-runnner</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>ETL Tool: Parent</name>
+
+    <properties>
+        <checkstyle.maxviolations>2</checkstyle.maxviolations>
+        <java.version>1.8</java.version>
+
+        <!-- scala -->
+        <scala.version>2.11.11</scala.version>
+        <scala.major.version>2.11</scala.major.version>
+
+        <!-- libs -->
+        <cats.version>1.6.0</cats.version>
+        <cats.effect.version>1.2.0</cats.effect.version>
+        <fs2.version>1.0.3</fs2.version>
+        <logback.version>1.1.6</logback.version>
+
+        <!-- test libraries -->
+        <scalatest.version>3.0.5</scalatest.version>
+
+        <!-- plugins -->
+        <scalatest.plugin.version>1.0</scalatest.plugin.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-javadoc-plugin</artifactId>
+               <version>2.9</version>
+               <configuration>
+                   <skip>true</skip>
+               </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>${scalatest.plugin.version}</version>
+                <configuration combine.self="override">
+                    <argLine>-XX:MaxPermSize=1024m -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled</argLine>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF ScalatestReport.txt</filereports>
+                    <testFailureIgnore>false</testFailureIgnore>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- scala -->
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+
+            <!-- functional scala -->
+            <dependency>
+                <groupId>org.typelevel</groupId>
+                <artifactId>cats-core_2.11</artifactId>
+                <version>${cats.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.typelevel</groupId>
+                <artifactId>cats-effect_2.11</artifactId>
+                <version>${cats.effect.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.chrisdavenport</groupId>
+                <artifactId>cats-par_2.11</artifactId>
+                <version>0.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>co.fs2</groupId>
+                <artifactId>fs2-core_2.11</artifactId>
+                <version>${fs2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.fs2</groupId>
+                <artifactId>fs2-io_2.11</artifactId>
+                <version>${fs2.version}</version>
+            </dependency>
+
+            <!-- logging -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <!-- Test -->
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_2.11</artifactId>
+                <version>${scalatest.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.19.0</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- scala -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+        </dependency>
+
+        <!-- functional scala -->
+        <dependency>
+            <groupId>org.typelevel</groupId>
+            <artifactId>cats-core_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.typelevel</groupId>
+            <artifactId>cats-effect_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.chrisdavenport</groupId>
+            <artifactId>cats-par_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.fs2</groupId>
+            <artifactId>fs2-core_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.fs2</groupId>
+            <artifactId>fs2-io_2.11</artifactId>
+        </dependency>
+
+        <!-- logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.11</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

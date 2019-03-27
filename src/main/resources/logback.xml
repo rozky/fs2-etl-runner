@@ -1,0 +1,21 @@
+<configuration>
+    <jmxConfigurator/>
+
+    <appender name="APPLOG_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} - %msg %ex{short}%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="APPLOG_STDOUT"/>
+    </root>
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook" />
+
+</configuration>
+

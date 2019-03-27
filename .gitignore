@@ -1,0 +1,16 @@
+target
+.idea
+*.iml
+atlassian-ide-plugin.xml
+tools/dependency-reduced-pom.xml
+*.bak
+work
+*~
+*.ids
+build.log
+*.ipr
+*.iw
+solr/overlays
+deduplicator/data/
+data/
+.DS_Store
