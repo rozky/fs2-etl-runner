@@ -6,11 +6,11 @@ import com.roozky.tools.fs2.etl.EtlMetrics.{ExtractMetrics, LoadMetrics, Transfo
 import scala.language.higherKinds
 
 trait EtlMetrics[F[_]] {
-  def extractMetrics(): ExtractMetrics[F]
+  def extractMetrics: ExtractMetrics[F]
 
-  def transformMetrics(): TransformMetrics[F]
+  def transformMetrics: TransformMetrics[F]
 
-  def loadMetrics(): LoadMetrics[F]
+  def loadMetrics: LoadMetrics[F]
 
   def recordDeadLetterWorkReceived(): F[Unit]
 }
@@ -26,7 +26,9 @@ object EtlMetrics {
   }
 
   trait ExtractMetrics[F[_]] extends StageMetrics[F]
+
   trait TransformMetrics[F[_]] extends StageMetrics[F]
+
   trait LoadMetrics[F[_]] extends StageMetrics[F]
 
   class NoOpStageMetrics[F[_]]()(implicit F: Sync[F]) extends ExtractMetrics[F] with TransformMetrics[F] with LoadMetrics[F] {
@@ -39,11 +41,11 @@ object EtlMetrics {
 
   class NoOpMetrics[F[_]]()(implicit F: Sync[F]) extends EtlMetrics[F] {
 
-    override def extractMetrics(): ExtractMetrics[F] = new NoOpStageMetrics[F]()
+    override val extractMetrics: ExtractMetrics[F] = new NoOpStageMetrics[F]()
 
-    override def transformMetrics(): TransformMetrics[F] = new NoOpStageMetrics[F]()
+    override val transformMetrics: TransformMetrics[F] = new NoOpStageMetrics[F]()
 
-    override def loadMetrics(): LoadMetrics[F] = new NoOpStageMetrics[F]()
+    override val loadMetrics: LoadMetrics[F] = new NoOpStageMetrics[F]()
 
     override def recordDeadLetterWorkReceived(): F[Unit] = F.unit
   }
